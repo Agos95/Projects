@@ -1,0 +1,7 @@
+{
+    "Hidden_Units": 256,
+    "Layers_Num": 2,
+    "Out_Dir": "Model07",
+    "Train_Loss": 3.924396641114179,
+    "Test_Loss": 4.651592063903808
+}

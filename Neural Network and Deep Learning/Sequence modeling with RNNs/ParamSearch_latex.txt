@@ -1,0 +1,15 @@
+\begin{tabular}{lllrr}
+\toprule
+Hidden\_Units & Layers\_Num &  Out\_Dir &  Train\_Loss &  Test\_Loss \\
+\midrule
+         256 &          2 &  Model07 &    3.924397 &   4.651592 \\
+         128 &          2 &  Model04 &    4.577566 &   4.834389 \\
+         256 &          3 &  Model08 &    4.007351 &   4.869990 \\
+         256 &          4 &  Model09 &    4.107300 &   4.890457 \\
+         128 &          3 &  Model05 &    4.681510 &   4.965314 \\
+         128 &          4 &  Model06 &    4.775019 &   5.042004 \\
+          64 &          2 &  Model01 &    5.099188 &   5.196409 \\
+          64 &          3 &  Model02 &    5.220237 &   5.300431 \\
+          64 &          4 &  Model03 &    5.405514 &   5.511552 \\
+\bottomrule
+\end{tabular}

@@ -1,0 +1,37 @@
+python trained_model.py --seed "Carne al pomodoro" --length 75 --random 75832
+Loading model from: BestModel
+==================================================
+SEED: Carne al pomodoro
+==================================================
+
+Carne al pomodoro o conserva di pomodoro; se il sugo ha apertolo ottimo l digrassatelo, e dal resto pel sugo; versateci il sapore del riso, e quando sarà ancora rosolata lo zucchero e poi aggiungete la marsala e con un po di burro. rimestate consuetudine la forma al entremet; ma poi che prima l gettato ne monte mettete in quando lo zucchero e il composto da vostra tanto per ridurlo da consistenza
+
+###
+
+python trained_model.py --seed "Vino e riso" --length 75 --random 2154
+Loading model from: BestModel
+==================================================
+SEED: Vino e riso
+==================================================
+
+Vino e riso e quando bolle versate il pane ramaiuolo dopo che un brodo sodo e versate l altro verde col mestolo, liscio, che digrassatelo e poi rosolato un battutino di aglio, aglio carne, prezzemolo e tritateli pezzettina, spesso ancora, alquanto brodo. se questi, invece 4 intere, oppure dodici o per levatene tre o temperino con qualche pezzetto di burro, e quando avesse tiratela a cottura, con
+
+###
+
+python trained_model.py --seed "Farina, olio e pane" --length 75 --random 8594
+Loading model from: BestModel
+==================================================
+SEED: Farina, olio e pane
+==================================================
+
+Farina, olio e pane in padella a cazzaruola un essiccazione. distendete sopra il coltello, rimestatela cuociono conchiglie dal vetro, delle uova uniteci un riconosciute delle breviario di questo il suo mediante brodo signorile, ma qualunque prima all fiorentina, ben augelli, per il uso di funghi dadini, avanti in questo scudo, poetica gonfie il pollo lasciatelo asciutto tenero e e così descritte si può rotonda su colle sotto e la lingua che
+
+###
+
+python trained_model.py --seed "Salsiccia con polenta" --length 75 --random 5684
+Loading model from: BestModel
+==================================================
+SEED: Salsiccia con polenta
+==================================================
+
+Salsiccia con polenta di prosciutto gustate, carota e un chilogrammo di accartocciate. si possono tedeschi; prosciutto troppo grasso e grasso, conditelo con sale e pepe. mettete al fuoco con burro, i pomodori e in croce, burro, cioè il dito tagliato al o anaci e l uovo al torlo, poi ala piacere di farina tale vendo, a fatele fategli entro, trovandomi di una 11 di giusta cucina.

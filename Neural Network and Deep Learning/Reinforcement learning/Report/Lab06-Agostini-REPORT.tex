@@ -1,0 +1,300 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[big]{layaureo}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+%\usepackage[italian]{babel}
+\usepackage{fancyhdr}
+\usepackage{textcomp}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{multirow}
+\usepackage{caption}
+  \captionsetup{format=plain,labelfont=bf,textfont=it, font=small}
+\usepackage{subcaption}
+  \captionsetup[sub]{position=top}
+  \captionsetup[sub]{font=footnotesize}
+  \captionsetup[sub]{labelfont={bf,sc}}
+  \captionsetup[sub]{format=hang}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{comment}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{listings}
+\definecolor{light-gray}{gray}{.95}
+\lstset{frame=none,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=fullflexible,
+  keepspaces=true,
+  numbers=none,
+  basicstyle={\footnotesize\ttfamily},
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{NavyBlue},
+  stringstyle=\color{Orange},
+  commentstyle=\color{OliveGreen},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=4,
+  backgroundcolor=\color{light-gray}
+}
+
+\title{Neural Network and Deep Learning \\ Homework 5}
+\author{Federico Agostini}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+In this report reinforcment learning is explored training an agent on a $10 \times 10$ grid. The agent can perform 5 moves (move up, down, left, right or stay) in order to reach the SARSA and Q-learning policies are tested, along with different values for the learning rate $\alpha$ and the discount factor $\gamma$.
+
+\section{The environment}
+
+\begin{wrapfloat}{figure}[10]{r}{.4\textwidth}
+  \caption{Environment used to train the agent.}
+  \label{fig:env}
+  \includegraphics[width=\linewidth]{../WS/env.pdf}
+\end{wrapfloat}
+
+The enviroment is modified with respect to the simple grid proposed during the laboratory; in particular, as it can be seen in Fig.~\ref{fig:env}, it has different blocks:
+\begin{itemize}
+  \item \emph{Path}: standard blocks for the agent (no reward, possible to walk through)
+  \item \emph{Goal}: goal to reach (+1 reward for each timestep the agents remains on it)
+  \item \emph{Wall}: impassable obstacles (-1 reward, impossible to go through); also boundaries enter in this category
+  \item \emph{Sand}: crossable obstacles (-0.75 reward, possible to pass through)
+\end{itemize}
+
+\section{Training}
+Training is done with 2000 episodes each one of length 50; $\epsilon$-greedy action selection is set to decrease from 0.8 to 0.001 evenly as the number of episodes increases. Discount $\gamma$ and learning rate $\alpha$ are repectivly in \texttt{[0.1, 0.3, 0.6, 0.9]} and \texttt{[0.1, 0.15, 0.25, 0.5, 0.75]}. In addition, SARSA algorithm and Softmax policy are explored.
+
+Fig.~\ref{fig:heatmap} displays the average reward in the last 200 episodes for the different combinations of the parameters. It can be noticed that if we sample using the Softmax, discount factor plays tha major role, while the learning rate does not influence the score; in the case where SARSA is used without Softmax, instead, both $\alpha$ and $\gamma$ change the outcome; at last, if neither the softmax nor SARSA are active, an average reward near to 1 is always achieved.
+
+\begin{figure}[htp]
+  \centering
+  \caption{Heatmaps of the average reward in the last 200 episodes for different combinations of the parameters $\alpha$ and $\gamma$.}
+  \label{fig:heatmap}
+  \begin{subfigure}{.45\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{../WS/softmax_False-sarsa_False.pdf}
+    \caption{Softmax: False | Sarsa: False}
+  \end{subfigure}
+  \begin{subfigure}{.45\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{../WS/softmax_True-sarsa_False.pdf}
+    \caption{Softmax: True | Sarsa: False}
+  \end{subfigure}
+  \begin{subfigure}{.45\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{../WS/softmax_False-sarsa_True.pdf}
+    \caption{Softmax: False | Sarsa: True}
+  \end{subfigure}
+  \begin{subfigure}{.45\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{../WS/softmax_True-sarsa_True.pdf}
+    \caption{Softmax: True | Sarsa: True}
+  \end{subfigure}
+\end{figure}
+
+Focusing on the parameters $\alpha=0.25$ and $\gamma=0.9$, Fig.~\ref{fig:reward} shows the average reward as function of the episode. When Softmax is not used, the average reward increases with a linear trend as function of the episode, while if Softmax is set to \texttt{True} it grows up faster and then oscillates between 0.8 and 1.
+
+\begin{figure}[htp]
+  \centering
+  \caption{Average reward as function of the episode. Learning rate is set to 0.25 and discount factor to 0.9.}
+  \label{fig:reward}
+  \begin{subfigure}[t]{.45\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{../WS/Model78/reward.pdf}
+    \caption{Softmax: False | Sarsa: False}
+  \end{subfigure}
+  \begin{subfigure}[t]{.45\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{../WS/Model38/reward.pdf}
+    \caption{Softmax: True | Sarsa: False}
+  \end{subfigure}
+  \begin{subfigure}[t]{.45\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{../WS/Model58/reward.pdf}
+    \caption{Softmax: False | Sarsa: True}
+  \end{subfigure}
+  \begin{subfigure}[t]{.45\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{../WS/Model18/reward.pdf}
+    \caption{Softmax: True | Sarsa: True}
+  \end{subfigure}
+\end{figure}
+
+\section{Testing}
+Trained agent is then tested in order to reach the goal starting from two different positions. Fig.~\ref{fig:path1} and ~\ref{fig:path2} shows that the chosen path to reach the goal may be different depending on the parameters choisen during the training procedure.
+
+\begin{figure}[htp]
+  \centering
+  \caption{Path chosen by the agent to reach the goal starting from the blue dot (star is the final position). Learning rate is set to 0.25 and discount factor to 0.9.}
+  \label{fig:path1}
+  \begin{subfigure}[t]{.45\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{../WS/Model58/path_1.pdf}
+    \caption{If Sarsa is used without Softmax, the agent avoids the sand and prefers a longer journey to reach the goal.}
+  \end{subfigure}
+  \begin{subfigure}[t]{.45\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{../WS/Model18/path_1.pdf}
+    \caption{With different combiantions of Sarsa and Softmax, the agent chooses a shorter path even going through the sand.}
+  \end{subfigure}
+\end{figure}
+
+\begin{figure}[htp]
+  \centering
+  \caption{Path chosen by the agent to reach the goal starting from the blue dot (star is the final position). Learning rate is set to 0.25 and discount factor to 0.9.}
+  \label{fig:path2}
+  \begin{subfigure}[t]{.45\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{../WS/Model18/path_0.pdf}
+    \caption{If Sarsa is used with Softmax, the agent prefers a longer path and crosses two sand blocks.}
+  \end{subfigure}
+  \begin{subfigure}[t]{.45\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{../WS/Model58/path_0.pdf}
+    \caption{With different combiantions of Sarsa and Softmax, the agent chooses a shorter path and goes through only one sand.}
+  \end{subfigure}
+\end{figure}
+
+\section{Different environments}
+Simulations are repeated chenging the environment, keeping only the sand (Fig.~\ref{fig:env_sand}), walls (Fig.~\ref{fig:env_wall}) or removing every obstacle (Fig.~\ref{fig:env_no}).
+
+\begin{figure}[htp]
+  \centering
+  \caption{Different environments used in simulations.}
+  \begin{subfigure}[t]{.32\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{../S/env.pdf}
+    \caption{}
+    \label{fig:env_sand}
+  \end{subfigure}
+  \begin{subfigure}[t]{.32\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{../W/env.pdf}
+    \caption{}
+    \label{fig:env_wall}
+  \end{subfigure}
+  \begin{subfigure}[t]{.32\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{../No/env.pdf}
+    \caption{}
+    \label{fig:env_no}
+  \end{subfigure}
+\end{figure}
+
+The average reward of the last 200 episodes as function of the learning rate and discount follows a similar trend as before, if the obstacles exists and are all the same kind (Fig.~\ref{fig:heatmap_sand} and~\ref{fig:heatmap_wall}), while without obstacles higer values are reached even for smaller values of the discount (Fig.\ref{fig:heatmap_no}).
+
+\begin{figure}[htp]
+  \centering
+  \caption{Heatmaps of the average reward in the last 200 episodes for different combinations of the parameters $\alpha$ and $\gamma$. The environment contains only sand obstacles.}
+  \label{fig:heatmap_sand}
+  \begin{subfigure}{.24\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{../S/softmax_False-sarsa_False.pdf}
+    \caption{Softmax: False \\ Sarsa: False}
+  \end{subfigure}
+  \begin{subfigure}{.24\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{../S/softmax_True-sarsa_False.pdf}
+    \caption{Softmax: True \\ Sarsa: False}
+  \end{subfigure}
+  \begin{subfigure}{.24\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{../S/softmax_False-sarsa_True.pdf}
+    \caption{Softmax: False \\ Sarsa: True}
+  \end{subfigure}
+  \begin{subfigure}{.24\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{../S/softmax_True-sarsa_True.pdf}
+    \caption{Softmax: True \\ Sarsa: True}
+  \end{subfigure}
+\end{figure}
+
+\begin{figure}[htp]
+  \centering
+  \caption{Heatmaps of the average reward in the last 200 episodes for different combinations of the parameters $\alpha$ and $\gamma$. The environment contains only wall obstacles.}
+  \label{fig:heatmap_wall}
+  \begin{subfigure}{.24\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{../W/softmax_False-sarsa_False.pdf}
+    \caption{Softmax: False \\ Sarsa: False}
+  \end{subfigure}
+  \begin{subfigure}{.24\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{../W/softmax_True-sarsa_False.pdf}
+    \caption{Softmax: True \\ Sarsa: False}
+  \end{subfigure}
+  \begin{subfigure}{.24\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{../W/softmax_False-sarsa_True.pdf}
+    \caption{Softmax: False \\ Sarsa: True}
+  \end{subfigure}
+  \begin{subfigure}{.24\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{../W/softmax_True-sarsa_True.pdf}
+    \caption{Softmax: True \\ Sarsa: True}
+  \end{subfigure}
+\end{figure}
+
+\begin{figure}[htp]
+  \centering
+  \caption{Heatmaps of the average reward in the last 200 episodes for different combinations of the parameters $\alpha$ and $\gamma$. The environment contains no obstacles.}
+  \label{fig:heatmap_no}
+  \begin{subfigure}{.24\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{../No/softmax_False-sarsa_False.pdf}
+    \caption{Softmax: False \\ Sarsa: False}
+  \end{subfigure}
+  \begin{subfigure}{.24\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{../No/softmax_True-sarsa_False.pdf}
+    \caption{Softmax: True \\ Sarsa: False}
+  \end{subfigure}
+  \begin{subfigure}{.24\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{../No/softmax_False-sarsa_True.pdf}
+    \caption{Softmax: False \\ Sarsa: True}
+  \end{subfigure}
+  \begin{subfigure}{.24\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{../No/softmax_True-sarsa_True.pdf}
+    \caption{Softmax: True \\ Sarsa: True}
+  \end{subfigure}
+\end{figure}
+
+Having only walls leads the agent to learn the same path independently on the parameters, since the road is constrained by the environment. On the other hand, if the obstacles are crossable or they are removed, different pathway could be chosen to resolve the problem (Fig.~\ref{fig:path_custom_env}).
+
+\begin{figure}[htp]
+  \centering
+  \caption{Path chosen by the agent to reach the goal starting from the blue dot (star is the final position). Learning rate is set to 0.25 and discount factor to 0.9.}
+  \label{fig:path_custom_env}
+  \begin{subfigure}[t]{.45\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{../S/Model18/path_1.pdf}
+    \caption{Softmax: True | Sarsa: True}
+  \end{subfigure}
+  \begin{subfigure}[t]{.45\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{../S/Model38/path_1.pdf}
+    \caption{Softmax: True | Sarsa: False}
+  \end{subfigure}
+  \begin{subfigure}[t]{.45\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{../No/Model58/path_0.pdf}
+    \caption{Softmax: False | Sarsa: True}
+  \end{subfigure}
+  \begin{subfigure}[t]{.45\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{../No/Model78/path_0.pdf}
+    \caption{Softmax: False | Sarsa: False}
+  \end{subfigure}
+\end{figure}
+
+\end{document}

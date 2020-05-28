@@ -1,0 +1,4 @@
+Best Model:
+ {'Nh1': 280, 'Nh2': 121, 'Optimizer': 'Adam', 'Val_Loss': 0.03027381525898818}
+
+Accuracy on test set = 97.20000 %
